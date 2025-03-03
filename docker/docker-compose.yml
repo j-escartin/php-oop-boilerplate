@@ -1,0 +1,56 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: php_fpm
+    volumes:
+      - ../app:/var/www/html/app
+      - ../public:/var/www/html/public
+      - ../tests:/var/www/html/tests
+      - ../.env:/var/www/html/.env
+      - ../composer.json:/var/www/html/composer.json
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ../public:/var/www/html/public
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    
+  db:
+    image: mariadb:10
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  db_data:
