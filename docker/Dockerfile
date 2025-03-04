@@ -13,9 +13,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    libcurl4-openssl-dev \
     mariadb-client \
+    libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo_mysql mysqli \
+    && docker-php-ext-install gd pdo_mysql mysqli curl dom \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

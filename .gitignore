@@ -3,3 +3,6 @@
 
 # Ignore Docker-related files
 data/
+
+# Ignore vendor files
+vendor/
