@@ -1,39 +1,39 @@
 <?php
-
-use James\PhpOopBoilerplate\Config\Database;
 use James\PhpOopBoilerplate\Models\Student;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class StudentTest extends TestCase {
-  public function testCreateMethod(){
-    // Mock PDO and PDO Statement
-    $pdoMock = $this->createMock(PDO::class);
+  public function testCreateStudentSuccessfully(){
+
     $stmtMock = $this->createMock(PDOStatement::class);
+    $stmtMock->expects($this->once())->method('execute')->willReturn(true);
 
-    // Ensure prepare()return  a mock statement
-    $pdoMock->method('prepare')->willReturn($stmtMock);
+    $pdoMock = $this->createMock(PDO::class);
+    $pdoMock->expects($this->once())->method('prepare')->willReturn($stmtMock);
 
-    // Ensure execute() is  called and return true
-    $stmtMock->method('execute')->willReturn(true);
+    /**
+     * @var PDO&MockObject $pdoMock
+     */
+    $student = new Student($pdoMock);
+    $result  = $student->create('John',  16, '12');
 
-    //Mock Database Class
-    $dbMock = $this->createMock(Database::class);
-    $dbMock->method('getConnection')->willReturn($pdoMock);
-
-    //Inject MockDb to Student
-    $student = new Student();
-    
-    //Use Reflection to override private $conn
-    $reflection = new \ReflectionClass($student);
-    $property = $reflection->getProperty('conn');
-    $property->setAccessible(true);
-    $property->setValue($student, $pdoMock);
-
-    // Run Test
-    $result = $student->create('Jake', 15, '10');
-
-    // Assert that it return true
     $this->assertTrue($result);
-    
   } 
+
+  public function testCreateStudentFail() {
+    $stmtMock =  $this->createMock(PDOStatement::class);
+    $stmtMock->expects($this->once())->method('execute')->willReturn(false);
+
+    $pdoMock = $this->createMock(PDO::class);
+    $pdoMock->expects($this->once())->willReturn($stmtMock);
+
+     /**
+     * @var PDO&MockObject $pdoMock
+     */
+    $student = new  Student($pdoMock);
+    $result =  $student->create("Jane",  11, "Junior");
+
+    $this->assertFalse($result);
+  }
 }

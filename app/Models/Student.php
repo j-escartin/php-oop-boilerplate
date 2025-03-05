@@ -2,12 +2,13 @@
 namespace James\PhpOopBoilerplate\Models;
 
 use James\PhpOopBoilerplate\Config\Database;
+use PDO;
 
 class Student {
-  private $conn;
+  private PDO $conn;
 
-  public function  __construct() {
-    $this->conn = Database::getInstance()->getConnection();
+  public function  __construct(PDO $conn) {
+    $this->conn = $conn;
   }
 
   public function create($name, $age,  $year_level) {
