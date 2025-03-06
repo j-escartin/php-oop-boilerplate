@@ -21,6 +21,8 @@ $database = Database::getInstance($dbConf);
 $pdo = $database->getConnection();
 
 if($request === '/' ||  $request === 'index.php') {
+  $studentController = new StudentController(new Student($pdo));
+  $students = $studentController->retrieveStudents();
   require __DIR__ . '/../app/Views/landing.php';
 } else if($request === '/create' && $_SERVER['REQUEST_METHOD'] === 'GET') {
   require_once __DIR__ . '/../app/Views/create.php';

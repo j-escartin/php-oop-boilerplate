@@ -24,4 +24,8 @@ class StudentController {
       $this->requestData['year_level']
     );
   }
+
+  public function retrieveStudents() {
+    return $this->studentModel->getStudents();
+  }
 }

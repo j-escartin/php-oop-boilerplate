@@ -25,4 +25,23 @@ class StudentControllerTest extends TestCase {
     $result = $controller->store();
     $this->assertTrue($result);
   }
+
+  public function testRetrieveStudents() {
+    $studentModelMock =  $this->createMock(Student::class);
+
+    $expectedStudents = [
+      ['name' => 'Jack', 'age' => 20, 'year_level' => 'Sophomore'],
+      ['name' => 'Jane Smith', 'age' => 22, 'year_level' => 'Senior']
+    ];
+
+    $studentModelMock->method('getStudents')->willReturn($expectedStudents);
+
+    /**
+     * @var Student&MockObject $studentModelMock
+     */
+    $controller = new StudentController($studentModelMock);
+
+    $actualStudents = $controller->retrieveStudents();
+    $this->assertEquals($expectedStudents, $actualStudents);
+  }
 }
