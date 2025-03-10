@@ -34,4 +34,16 @@ class Student {
       return [];
     }
   }
+
+  public function getStudentById($id){
+    try {
+      $sql = "SELECT * FROM student WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+      $stmt->execute();
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 }

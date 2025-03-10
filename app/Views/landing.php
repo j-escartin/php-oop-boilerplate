@@ -13,6 +13,7 @@
                     <th>Name</th>
                     <th>Age</th>
                     <th>Year Level</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,9 @@
                         <td><?= htmlspecialchars($student['name'])?></td>
                         <td><?= htmlspecialchars($student['age'])?></td>
                         <td><?= htmlspecialchars($student['year_level'])?></td>
+                        <td>
+                            <a href="/edit?id=<?= $student['id'] ?>"><button>Edit</button></a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

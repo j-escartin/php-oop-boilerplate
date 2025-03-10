@@ -25,7 +25,11 @@ class StudentController {
     );
   }
 
-  public function retrieveStudents() {
+  public function retrieveStudents():array {
     return $this->studentModel->getStudents();
+  }
+
+  public function retrieveStudentById():array {
+    return $this->studentModel->getStudentById($this->requestData['id']);
   }
 }

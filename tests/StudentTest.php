@@ -74,4 +74,37 @@ class StudentTest extends TestCase {
 
     $this->assertEmpty($studentModel->getStudents());
   }
+
+  public function testGetStudentByIdSuccess()  {
+    $stmtMock = $this->createMock(PDOStatement::class);
+    $mockData = [
+      'id' => 1, 
+      'name' => 'Jack', 
+      'age' => 21, 
+      'year_level' => '3'
+    ];
+
+    $stmtMock->method('fetch')->willReturn($mockData);
+
+    $pdoMock = $this->createMock(PDO::class);
+    $pdoMock->method('prepare')->willReturn($stmtMock);
+
+    /**
+     * @var PDO&MockObject $pdoMock
+     */
+    $student = new Student($pdoMock);
+    $this->assertEquals($mockData, $student->getStudentById(1));
+
+  }
+
+  public function testGetStudentByIdFail()  {
+    $pdoMock = $this->createMock(PDO::class);
+    $pdoMock->method('prepare')->willThrowException(new PDOException("DB Error"));
+
+    /**
+     * @var PDO&MockObject $pdoMock
+     */
+    $student = new Student($pdoMock);
+    $this->assertEmpty($student->getStudentById(1));
+  }
 }

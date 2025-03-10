@@ -37,7 +37,18 @@ if($request === '/' ||  $request === 'index.php') {
     exit();
   }
   
-} else {
+} else if($request === '/edit' && $_SERVER['REQUEST_METHOD']  === 'GET') {;
+  $studentController = new StudentController(new Student($pdo), $_GET);
+  $student = $studentController->retrieveStudentById();
+  if($student)  {
+    require_once __DIR__ . "/../app/Views/edit.php";
+  } else {
+    header('Location: /?error=1');
+    exit;
+  }
+}
+
+else {
   http_response_code(404);
   echo "404 Not Found";
 }

@@ -35,3 +35,4 @@ EXPOSE 9000
 
 # Start PHP-FPM server
 CMD ["php-fpm"]
+ 
