@@ -62,4 +62,21 @@ class StudentControllerTest extends TestCase {
     $actualResult = $controller->retrieveStudentById();
     $this->assertEquals($expectedResult, $actualResult);
   }
+
+  public function testUpdateStudent() {
+    $studentModelMock = $this->createMock(Student::class);
+    $studentModelMock->method('updateStudent')->willReturn(true);
+    $studentData = [
+      'id' => 1,
+      'name' => 'Jack',
+      'age' => 15,
+      'year_level' => 'first'
+    ];
+    
+    /**
+     * @var Student&MockObject $studentModelMock
+     */
+    $controller = new StudentController($studentModelMock, $studentData);
+    $this->assertTrue($controller->updateStudentsData());
+  }
 }

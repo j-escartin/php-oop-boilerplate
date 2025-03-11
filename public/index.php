@@ -46,9 +46,16 @@ if($request === '/' ||  $request === 'index.php') {
     header('Location: /?error=1');
     exit;
   }
-}
-
-else {
+} else if  ($request ===  '/edit' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+  $studentController  = new StudentController(new Student($pdo), $_POST);
+  if($studentController->updateStudentsData()) {
+    header('Location: /?success=1');
+    exit();
+  } else {
+    header('Location: /edit?error=1');
+    exit;
+  }
+}else {
   http_response_code(404);
   echo "404 Not Found";
 }

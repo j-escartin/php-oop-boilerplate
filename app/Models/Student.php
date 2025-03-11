@@ -46,4 +46,18 @@ class Student {
       return [];
     }
   }
+
+  public function updateStudent($id, $name, $age, $year_level) {
+    try {
+      $sql  = "UPDATE student SET name = :name, age = :age, year_level = :year_level WHERE id = :id";
+      $stmt =  $this->conn->prepare($sql);
+      $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+      $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+      $stmt->bindParam(':year_level', $year_level, PDO::PARAM_STR);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+      return $stmt->execute();
+    } catch (PDOException $e) {
+      return false;
+    }
+  }
 }

@@ -32,4 +32,13 @@ class StudentController {
   public function retrieveStudentById():array {
     return $this->studentModel->getStudentById($this->requestData['id']);
   }
+
+  public function updateStudentsData() {
+    return $this->studentModel->updateStudent(
+      $this->requestData['id'],
+      $this->requestData['name'],
+      $this->requestData['age'],
+      $this->requestData['year_level']
+    );
+  }
 }

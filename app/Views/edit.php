@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,8 +6,8 @@
 </head>
 <body>
     <h1>Edit Student</h1>
-    <form action="/landing" method="POST">
-        <input type="hidden" value="<?= $student['id'] ?>">
+    <form action="/edit" method="POST">
+        <input type="hidden" name="id" value="<?= $student['id'] ?>">
         <label>Name:</label>
         <input type="text" name="name" value="<?= $student['name'] ?>" required>
         <br>
