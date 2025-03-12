@@ -50,12 +50,21 @@ if($request === '/' ||  $request === 'index.php') {
   $studentController  = new StudentController(new Student($pdo), $_POST);
   if($studentController->updateStudentsData()) {
     header('Location: /?success=1');
-    exit();
+    exit;
   } else {
     header('Location: /edit?error=1');
     exit;
   }
-}else {
+} else if($request === '/delete'  && $_SERVER['REQUEST_METHOD'] === 'GET') {
+  $studentController = new StudentController(new Student($pdo), $_GET);
+  if($studentController->deleteStudent()){
+    header('Location: /?success=1');
+    exit;
+  } else {
+    header('Location: /edit?error=1');
+    exit;
+  }
+} else {
   http_response_code(404);
   echo "404 Not Found";
 }

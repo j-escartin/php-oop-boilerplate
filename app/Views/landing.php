@@ -24,6 +24,9 @@
                         <td><?= htmlspecialchars($student['year_level'])?></td>
                         <td>
                             <a href="/edit?id=<?= $student['id'] ?>"><button>Edit</button></a>
+                        </td> 
+                        <td>
+                            <a href="/delete?id=<?= $student['id'] ?>"><button>Delete</button></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

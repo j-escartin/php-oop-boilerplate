@@ -41,4 +41,10 @@ class StudentController {
       $this->requestData['year_level']
     );
   }
+
+  public function deleteStudent(){
+    return $this->studentModel->deleteByStudentId(
+      $this->requestData['id']
+    );
+  }
 }
